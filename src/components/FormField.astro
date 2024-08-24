@@ -1,0 +1,30 @@
+---
+const { name, question, choice } = Astro.props;
+let data = Array.from({ length: choice[1] - choice[0] + 1 }, (_, i) => choice[0] + i);
+---
+<div class="form__field">
+    <label class="form__field-ques">{question.vi}</label>
+    <div class="form__field-choice">
+        {data.map((val) => (
+            <Fragment>
+                <input type="radio" name={`${name}`} value={val} />
+                <label for={`quest_1_${val}`}>{val}</label>
+            </Fragment>
+        ))}
+    </div>
+</div>
+<style lang="scss">
+    .form {
+		&__field {
+			display: flex;
+			flex-direction: column;
+			&-ques {
+
+			}
+			&-choice {
+			display: flex;
+			gap: 5px;
+			}
+		}
+	}
+</style>

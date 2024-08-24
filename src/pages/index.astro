@@ -1,0 +1,106 @@
+---
+import FormField from '../components/FormField.astro';
+import Layout from '../layouts/Layout.astro';
+let data = [
+	{
+		name: "Đánh giá tổng quan",
+		question: {
+			vi: "Vui lòng cân nhắc hết tất cả yếu tố MÀU SẮC, BỌT, .V… thì mức độ thích hay không thích NÓI CHUNG của bạn đối với sản phẩm bia mà bạn vừa thử là như thế nào?",
+		},
+		choice: [0, 10]
+	},
+	{
+		name: "Đánh giá mùi vị",
+		question: {
+			vi: "Mức độ thích hay không thích nói chung của bạn đối với MÙI VỊ của bia này là như thế nào?",
+		},
+		choice: [0, 10]
+	},
+	{
+		name: "Đánh giá mức độ dễ uống",
+		question: {
+			vi: "Xin cho biết bạn đánh giá thế nào về MỨC ĐỘ DỄ UỐNG của sản phẩm bia này?",
+		},
+		choice: [1, 5]
+	},
+	{
+		name: "Ghi nhận cách thức sử dụng",
+		question: {
+			vi: "Hãy cho chúng tôi biết bạn thường sử dụng sản phẩm như thế nào?",
+		},
+		choice: [1, 5]
+	},
+	{
+		name: "Đánh giá bao bì",
+		question: {
+			vi: "Bạn hãy quan sát kỹ BAO BÌ của sản phẩm ở dạng CHAI & LON 330ml vui lòng cho biết mức độ bạn thích hay không thích của bạn?",
+		},
+		choice: [0, 10]
+	},
+]
+---
+
+<Layout title="Welcome to Astro.">
+	<main>
+		<body>
+			<div class="form">
+				<form id="form">
+					{data.map((el) => <FormField {...el} />)}
+
+					<button id='submit' type="submit">Submit</button>
+				</form>
+			</div>
+		</body>
+	</main>
+</Layout>
+
+<style lang="scss">
+	:root {
+		font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+		line-height: 1.5;
+		font-weight: 400;
+
+		color-scheme: light dark;
+		color: rgba(255, 255, 255, 0.87);
+		background-color: #242424;
+
+		font-synthesis: none;
+		text-rendering: optimizeLegibility;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	body {
+		margin: 0;
+		display: flex;
+		place-items: center;
+	}
+
+	.form {
+		padding-top: 100px;
+	}
+</style>
+
+<script is:inline>
+	const DEPLOYMENTURI = 'AKfycbx2Ufez68qL3tiV0nYxCz6t064PSYTUCDETOHLheifFOVA8bwGeqR4B2p098091C5ufWg';
+	const form = document.getElementById("form");
+	const submitButton = document.querySelector("#submit");
+
+	form.addEventListener("submit", async function(event) {
+			event.preventDefault();
+			const formData = new FormData(form);
+			const data = Object.fromEntries(formData);
+			try {
+				const response = await fetch(`https://script.google.com/macros/s/${DEPLOYMENTURI}/exec`, {
+					method: "POST",
+					body: new URLSearchParams(data)
+				});
+				const responseText = await response.text();
+				alert(responseText);
+				form.reset();
+			}
+			catch (error) {
+				alert(error);
+			}
+	});
+</script>
