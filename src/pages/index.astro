@@ -8,6 +8,7 @@ import Bottle from '~/assets/images/chai.png';
 import Can from '~/assets/images/lon.png';
 import Fermen from '~/assets/images/fermen.png';
 import ProductName from '~/assets/images/title.svg';
+import icLoad from "~/assets/images/loading.svg?raw";
 
 let data = [
 	{
@@ -405,9 +406,14 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 					</form>
 					<div class="last-screen step-item" data-step={10}>
 						<div class="container">
-							<div class="last-screen-title">
-								<span class="last-screen-title-txt">Cảm ơn bạn<br/>đã thực hiện đánh giá!</span>
-								<span class="last-screen-title-txt italic">Thank you for helping us with the survey!</span>
+							<div class="last-screen-wrap">
+								<div class="last-screen-title">
+									<span class="last-screen-title-txt">Cảm ơn bạn<br/>đã thực hiện đánh giá!</span>
+									<span class="last-screen-title-txt italic">Thank you for helping us with the survey!</span>
+								</div>
+								<div class="last-screen-loading">
+									<Fragment set:html={icLoad} />
+								</div>
 							</div>
 						</div>
 					</div>
@@ -570,7 +576,13 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 		position: relative;
 		z-index: 1;
 	}
+	@keyframes floating {
+		0% { transform: translate(0, 0rem); }
+		50% { transform: translate(0, 2.2rem); }
+		100% { transform: translate(0, 0rem); }
+	}
 	.bottle-img {
+
 		position: relative;
 		z-index: 3;
 		height: 75.37svh;
@@ -580,6 +592,9 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 		align-self: end;
 		transition: transform 1.2s ease-in-out;
 		justify-self: start;
+		img {
+			animation: floating 8s cubic-bezier(0.37, 0, 0.63, 1) -1s infinite;
+		}
 	}
 	.can-img {
 		position: relative;
@@ -591,6 +606,9 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 		margin-left: 29.3rem;
 		transition: transform 1.2s ease-in-out .1s;
 		justify-self: start;
+		img {
+			animation: floating 8s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+		}
 	}
 	.fermen-img {
 		position: relative;
@@ -890,21 +908,44 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 	}
 	.last-screen {
 		padding-top: 14.6rem;
+		&-wrap {
+			display: grid;
+			grid-template-columns: 1fr;
+			background-color: var(--cl-dm-bg);
+			border-radius: 2.4rem;
+		}
+		&.success {
+			.last-screen-title {
+				opacity: 1;
+			}
+			.last-screen-loading {
+				opacity: 0;
+			}
+		}
 		&-title {
+			grid-area: 1/1/2/2;
 			font-size: 5rem;
 			font-weight: 600;
 			line-height: 1.4em;
 			letter-spacing: -.001em;
-			background-color: var(--cl-dm-bg);
 			display: flex;
 			flex-direction: column;
 			padding: 4.4rem 3rem;
 			text-align: center;
-			border-radius: 2.4rem;
+			opacity: 0;
+			transition: opacity .4s ease-in-out;
 			&-txt.italic {
 				font-size: 2.4rem;
 				font-weight: 400;
 			}
+		}
+		&-loading {
+			width: 20rem;
+			grid-area: 1/1/2/2;
+			align-self: center;
+			justify-self: center;
+			opacity: 1;
+			transition: opacity .4s ease-in-out;
 		}
 	}
 	.form-control {
@@ -1006,8 +1047,9 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 		console.log("event")
 		event.preventDefault();
 		const formData = new FormData(form);
-		console.log(formData)
 		const data = Object.fromEntries(formData);
+		currStep++;
+		updateScreen();
 		// submitButton.disabled = true;
 
 		try {
@@ -1018,8 +1060,7 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 			const responseText = await response.text();
 			// alert(responseText);
 			// submitButton.disabled = false;
-			currStep++;
-			updateScreen();
+			document.querySelector(`[data-step='${lastStep}']`).classList.add('success');
 			form.reset();
 		}
 		catch (error) {
