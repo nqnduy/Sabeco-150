@@ -16,7 +16,6 @@ let data = [
 			vi: "Vui lòng cân nhắc hết tất cả yếu tố MÀU SẮC, BỌT, .V… thì mức độ thích hay không thích NÓI CHUNG của bạn đối với sản phẩm bia mà bạn vừa thử là như thế nào?",
 			en: "What is your overall liking of this beer? Please consider about all sensories: COLOR, FOAM, ETC of this beer."
 		},
-		choice: [0, 10]
 	},
 	{
 		name: "Đánh giá mùi vị",
@@ -24,7 +23,6 @@ let data = [
 			vi: "Mức độ thích hay không thích nói chung của bạn đối với MÙI VỊ của bia này là như thế nào?",
 			en: "How much do you like the SMELL & TASTE of this beer?"
 		},
-		choice: [0, 10]
 	},
 	{
 		name: "Đánh giá mức độ dễ uống",
@@ -32,7 +30,6 @@ let data = [
 			vi: "Xin cho biết bạn đánh giá thế nào về MỨC ĐỘ DỄ UỐNG của sản phẩm bia này?",
 			en: "Please let us know your opinions about how EASY TO DRINK of this beer product?"
 		},
-		choice: [1, 5]
 	},
 	{
 		name: "Ghi nhận cách thức sử dụng",
@@ -40,7 +37,6 @@ let data = [
 			vi: "Hãy cho chúng tôi biết bạn thường sử dụng sản phẩm như thế nào?",
 			en: "Please tell us how you usually use the product?"
 		},
-		choice: [1, 5]
 	},
 	{
 		name: "Đánh giá bao bì",
@@ -48,7 +44,20 @@ let data = [
 			vi: "Bạn hãy quan sát kỹ BAO BÌ của sản phẩm ở dạng CHAI & LON 330ml vui lòng cho biết mức độ bạn thích hay không thích của bạn?",
 			en: "Please look carefully at the PACKAGING of the product in 330ml BOTTLES & CANS."
 		},
-		choice: [0, 10]
+	},
+	{
+		name: "Ghi nhận ý định mua hàng",
+		question: {
+			vi: "Vui lòng cho biết ý định sử dụng sản phẩm 333 Pilsner trong lần uống bia sắp tới của bạn?",
+			en: "Can you tell us your purchase intention towards 333 Pilsner in the next drinking occasion?"
+		},
+	},
+	{
+		name: "Ghi nhận mức độ giới thiệu sản phẩm",
+		question: {
+			vi: "Vui lòng cho biết mức độ bạn muốn giới thiệu sản phẩm 333 Pilsner cho bạn bè/ người thân uống?",
+			en: "Would you recommend 333 Pilsner to your friends/family?"
+		},
 	},
 ]
 
@@ -64,8 +73,8 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 			<div class="wrapper"
 				style={{ backgroundImage: `url('${BG.src}')` }}
 			>
-				<div class="wrapper-inner" data-curr-step={2}>
-					<div class="first-screen" data-step={1}>
+				<div class="wrapper-inner">
+					<div class="first-screen step-item" data-step={1}>
 						<div class="container">
 							<div class="first-screen-wrap">
 								<div class="tagline">
@@ -96,7 +105,7 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 							</div>
 						</div>
 					</div>
-					<div class="form">
+					<form class="form" id="form" autocomplete="off">
 						<div class="container">
 							<div class="nav">
 								<span class="nav-item active"></span>
@@ -105,10 +114,12 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 								<span class="nav-item"></span>
 								<span class="nav-item"></span>
 								<span class="nav-item"></span>
+								<span class="nav-item"></span>
+								<span class="nav-item"></span>
 							</div>
 						</div>
-						<form class="form-inner" id="form" autocomplete="off">
-							<div class="second-screen" data-step={2}>
+						<div class="form-inner">
+							<div class="second-screen step-item" data-step={2}>
 								<div class="container">
 									<div class="second-screen-wrap">
 										<div class="infor-title">
@@ -150,7 +161,7 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 									</div>
 								</div>
 							</div>
-							<div class="third-screen" data-step={3}>
+							<div class="third-screen step-item" data-step={3}>
 								<div class="container">
 									<div class="third-screen-wrap">
 										<div class="form-field">
@@ -176,7 +187,7 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 									</div>
 								</div>
 							</div>
-							<div class="fourth-screen" data-step={4}>
+							<div class="fourth-screen step-item" data-step={4}>
 								<div class="container">
 									<div class="fourth-screen-wrap">
 										<div class="form-field">
@@ -202,7 +213,7 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 									</div>
 								</div>
 							</div>
-							<div class="fifth-screen" data-step={5}>
+							<div class="fifth-screen step-item" data-step={5}>
 								<div class="container">
 									<div class="fifth-screen-wrap">
 										<div class="form-field">
@@ -213,23 +224,23 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 											<div class="form-field-choice">
 												<div class="form-field-choice-listing mod-txt">
 													<div class="form-field-choice-item mod-txt">
-														<input type="radio" name={data[2].name} value={1} />
+														<input type="radio" name={data[2].name} value={'Rất không dễ uống'} />
 														<label for={`quest_3_1`}>1</label><span>Rất không dễ uống <span class="italic">/ Not easy to drink at all</span></span>
 													</div>
 													<div class="form-field-choice-item mod-txt">
-														<input type="radio" name={data[2].name} value={2} />
+														<input type="radio" name={data[2].name} value={'Hơi không dễ uống'} />
 														<label for={`quest_3_2`}>2</label><span>Hơi không dễ uống <span class="italic">/ Quite not easy to drink</span></span>
 													</div>
 													<div class="form-field-choice-item mod-txt">
-														<input type="radio" name={data[2].name} value={3} />
+														<input type="radio" name={data[2].name} value={'Bình thường'} />
 														<label for={`quest_3_3`}>3</label><span>Bình thường <span class="italic">/ Normal</span></span>
 													</div>
 													<div class="form-field-choice-item mod-txt">
-														<input type="radio" name={data[2].name} value={4} />
+														<input type="radio" name={data[2].name} value={'Hơi dễ uống'} />
 														<label for={`quest_3_4`}>4</label><span>Hơi dễ uống <span class="italic">/ Quite easy to drink</span></span>
 													</div>
 													<div class="form-field-choice-item mod-txt">
-														<input type="radio" name={data[2].name} value={5} />
+														<input type="radio" name={data[2].name} value={'Rất dễ uống'} />
 														<label for={`quest_3_5`}>5</label><span>Rất dễ uống <span class="italic">/ Extremely easy to drink</span></span>
 													</div>
 												</div>
@@ -238,7 +249,7 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 									</div>
 								</div>
 							</div>
-							<div class="sixth-screen" data-step={6}>
+							<div class="sixth-screen step-item" data-step={6}>
 								<div class="container">
 									<div class="sixth-screen-wrap">
 										<div class="form-field">
@@ -252,23 +263,23 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 												</div>
 												<div class="form-field-choice-listing mod-grid">
 													<div class="form-field-choice-item mod-grid">
-														<input type="radio" name={data[2].name} value={1} />
+														<input type="radio" name={data[3].name} value={'Uống sản phẩm ở nhiệt độ thường, không đá'} />
 														<label for={`quest_4_1`}><span>ở nhiệt độ thường, không đá</span><span class="italic">at room temperature without ice</span></label>
 													</div>
 													<div class="form-field-choice-item mod-grid">
-														<input type="radio" name={data[2].name} value={2} />
+														<input type="radio" name={data[3].name} value={'Uống sản phẩm ở nhiệt độ thường, có đá'} />
 														<label for={`quest_4_2`}><span>ở nhiệt độ thường, có đá</span><span class="italic">at room temperature with ice</span></label>
 													</div>
 													<div class="form-field-choice-item mod-grid">
-														<input type="radio" name={data[2].name} value={3} />
+														<input type="radio" name={data[3].name} value={'Uống sản phẩm đã được ướp lạnh, không đá'} />
 														<label for={`quest_4_3`}><span>đã được ướp lạnh, không đá</span><span class="italic">when it is chilled without ice</span></label>
 													</div>
 													<div class="form-field-choice-item mod-grid">
-														<input type="radio" name={data[2].name} value={4} />
+														<input type="radio" name={data[3].name} value={'Uống sản phẩm đã được ướp lạnh, có đá'} />
 														<label for={`quest_4_4`}><span>đã được ướp lạnh, có đá</span><span class="italic">when it is chilled with ice</span></label>
 													</div>
 													<div class="form-field-choice-item mod-grid">
-														<input type="radio" name={data[2].name} value={5} />
+														<input type="radio" name={data[3].name} value={'Pha với sản phẩm khác'} />
 														<label for={`quest_4_4`}><span>pha với sản phẩm khác</span><span class="italic">mix with other products</span></label>
 													</div>
 												</div>
@@ -277,7 +288,7 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 									</div>
 								</div>
 							</div>
-							<div class="seventh-screen" data-step={7}>
+							<div class="seventh-screen step-item" data-step={7}>
 								<div class="container">
 									<div class="seventh-screen-wrap">
 										<div class="form-field">
@@ -303,7 +314,79 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 									</div>
 								</div>
 							</div>
-						</form>
+							<div class="eighth-screen step-item" data-step={8}>
+								<div class="container">
+									<div class="eighth-screen-wrap">
+										<div class="form-field">
+											<div class="form-field-ques">
+												{data[5].question.vi}
+												<div class="italic">{data[5].question.en}</div>
+											</div>
+											<div class="form-field-choice">
+												<div class="form-field-choice-listing mod-txt">
+													<div class="form-field-choice-item mod-txt">
+														<input type="radio" name={data[5].name} value={'Chắc chắn không mua'} />
+														<label for={`quest_6_1`}>1</label><span>Chắc chắn không mua <span class="italic">/ Definitely would not buy</span></span>
+													</div>
+													<div class="form-field-choice-item mod-txt">
+														<input type="radio" name={data[5].name} value={'Có thể không mua'} />
+														<label for={`quest_6_2`}>2</label><span>Có thể không mua <span class="italic">/ Probalby would not buy</span></span>
+													</div>
+													<div class="form-field-choice-item mod-txt">
+														<input type="radio" name={data[5].name} value={'Có thể mua hoặc không mua'} />
+														<label for={`quest_6_3`}>3</label><span>Có thể mua hoặc không mua <span class="italic">/ Might or might not buy</span></span>
+													</div>
+													<div class="form-field-choice-item mod-txt">
+														<input type="radio" name={data[5].name} value={'Có thể sẽ mua'} />
+														<label for={`quest_6_4`}>4</label><span>Có thể sẽ mua <span class="italic">/ Probably would buy</span></span>
+													</div>
+													<div class="form-field-choice-item mod-txt">
+														<input type="radio" name={data[5].name} value={'Chắc chắn sẽ mua'} />
+														<label for={`quest_6_5`}>5</label><span>Chắc chắn sẽ mua <span class="italic">/ Definitely would buy</span></span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="ninth-screen step-item" data-step={9}>
+								<div class="container">
+									<div class="ninth-screen-wrap">
+										<div class="form-field">
+											<div class="form-field-ques">
+												{data[6].question.vi}
+												<div class="italic">{data[6].question.en}</div>
+											</div>
+											<div class="form-field-choice">
+												<div class="form-field-choice-listing mod-txt">
+													<div class="form-field-choice-item mod-txt">
+														<input type="radio" name={data[6].name} value={'Chắc chắn không giới thiệu'} />
+														<label for={`quest_7_1`}>1</label><span>Chắc chắn không giới thiệu <span class="italic">/ Definitely would not recommend</span></span>
+													</div>
+													<div class="form-field-choice-item mod-txt">
+														<input type="radio" name={data[6].name} value={'Có thể không giới thiệu'} />
+														<label for={`quest_7_2`}>2</label><span>Có thể không giới thiệu <span class="italic">/ Probalby would not recommend</span></span>
+													</div>
+													<div class="form-field-choice-item mod-txt">
+														<input type="radio" name={data[6].name} value={'Có thể giới thiệu hoặc không giới thiệu'} />
+														<label for={`quest_7_3`}>3</label><span>Có thể giới thiệu hoặc không giới thiệu <span class="italic">/ Might or might not recommend</span></span>
+													</div>
+													<div class="form-field-choice-item mod-txt">
+														<input type="radio" name={data[6].name} value={'Có thể sẽ giới thiệu'} />
+														<label for={`quest_7_4`}>4</label><span>Có thể sẽ giới thiệu <span class="italic">/ Probably would recommend</span></span>
+													</div>
+													<div class="form-field-choice-item mod-txt">
+														<input type="radio" name={data[6].name} value={'Chắc chắn sẽ giới thiệu'} />
+														<label for={`quest_7_5`}>5</label><span>Chắc chắn sẽ giới thiệu <span class="italic">/ Definitely would recommend</span></span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 						<div class="container">
 							<div class="form-control">
 								<div class="form-control-prev">
@@ -319,8 +402,8 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="last-screen" data-step={8}>
+					</form>
+					<div class="last-screen step-item" data-step={10}>
 						<div class="container">
 							<div class="last-screen-title">
 								<span class="last-screen-title-txt">Cảm ơn bạn<br/>đã thực hiện đánh giá!</span>
@@ -397,6 +480,8 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 		grid-area: 1/1/2/2;
 		opacity: 0;
 		pointer-events: none;
+		position: relative;
+		z-index: 2;
 		&.active {
 			opacity: 1;
 			pointer-events: auto;
@@ -453,11 +538,7 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 			}
 		}
 	}
-	.first-screen {
-		position: relative;
-		z-index: 3;
-		width: 100%;
-		height: 100%;
+	.step-item {
 		grid-area: 1/1/2/2;
 		opacity: 0;
 		pointer-events: none;
@@ -465,6 +546,12 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 			opacity: 1;
 			pointer-events: auto;
 		}
+	}
+	.first-screen {
+		position: relative;
+		z-index: 3;
+		width: 100%;
+		height: 100%;
 		&-wrap {
 			padding-top: 10.46svh;
 			display: flex;
@@ -500,6 +587,8 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 		grid-template-columns: 1fr;
 		pointer-events: none;
 		user-select: none;
+		position: relative;
+		z-index: 1;
 	}
 	.bottle-img {
 		position: relative;
@@ -542,9 +631,6 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 		margin-inline: -5rem;
 	}
 	.second-screen {
-		grid-area: 1/1/2/2;
-		opacity: 0;
-		pointer-events: none;
 		&-wrap {
 			padding-top: 4rem;
 		}
@@ -811,42 +897,7 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 			}
 		}
 	}
-	.third-screen {
-		grid-area: 1/1/2/2;
-		opacity: 0;
-		pointer-events: none;
-		&.active {
-			opacity: 1;
-			pointer-events: auto;
-		}
-	}
-	.fourth-screen {
-		grid-area: 1/1/2/2;
-		opacity: 0;
-		pointer-events: none;
-		&.active {
-			opacity: 1;
-			pointer-events: auto;
-		}
-	}
-	.fifth-screen {
-		grid-area: 1/1/2/2;
-		opacity: 0;
-		pointer-events: none;
-		&.active {
-			opacity: 1;
-			pointer-events: auto;
-		}
-	}
 	.sixth-screen {
-		opacity: 0;
-		pointer-events: none;
-		grid-area: 1/1/2/2;
-		&.active {
-			opacity: 1;
-			pointer-events: auto;
-		}
-
 		.form-field-ques {
 			margin-bottom: 3rem;
 		}
@@ -857,24 +908,8 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 			}
 		}
 	}
-	.seventh-screen {
-		grid-area: 1/1/2/2;
-		opacity: 0;
-		pointer-events: none;
-		&.active {
-			opacity: 1;
-			pointer-events: auto;
-		}
-	}
 	.last-screen {
-		grid-area: 1/1/2/2;
 		padding-top: 14.6rem;
-		opacity: 0;
-		pointer-events: none;
-		&.active {
-			opacity: 1;
-			pointer-events: auto;
-		}
 		&-title {
 			font-size: 5rem;
 			font-weight: 600;
@@ -901,6 +936,20 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 		&.active {
 			opacity: 1;
 			pointer-events: auto;
+		}
+		&-prev,
+		&-next {
+			@keyframes hover-state {
+				0% {
+					filter: brightness(.6);
+				}
+				100% {
+					filter: brightness(1);
+				}
+			}
+			&:hover {
+				animation: hover-state .5s ease-in-out;
+			}
 		}
 		&-prev {
 			display: flex;
@@ -935,9 +984,12 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 				opacity: 0;
 				pointer-events: none;
 				z-index: 2;
+
 			}
 			&.submit {
-				pointer-events: auto;
+				#submit {
+					pointer-events: auto;
+				}
 			}
 			.italic {
 				font-weight: 400;
@@ -967,8 +1019,11 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 	// 		submitButton.disabled = false;
 	// 	})
 	// })
+	let currStep = 1;
+	let lastStep = 10;
 
 	form?.addEventListener("submit", async function(event) {
+		console.log("event")
 		event.preventDefault();
 		const formData = new FormData(form);
 		console.log(formData)
@@ -981,8 +1036,10 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 				body: new URLSearchParams(data)
 			});
 			const responseText = await response.text();
-			alert(responseText);
+			// alert(responseText);
 			// submitButton.disabled = false;
+			currStep++;
+			updateScreen();
 			form.reset();
 		}
 		catch (error) {
@@ -991,7 +1048,6 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 		}
 	});
 
-	let currStep = 1;
 	const updateScreen = () => {
 		// let currStep = document.querySelector('[data-curr-step]').getAttribute('data-curr-step');
 		document.querySelectorAll('[data-step]').forEach(step => {
@@ -1002,9 +1058,9 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 				step.classList.remove('active');
 			}
 		})
-		document.querySelector('.wrapper-inner').classList[(currStep == 1 || currStep == 8) ? 'remove' : 'add']('move-step');
-		document.querySelector('.nav').classList[(currStep == 1 || currStep == 8) ? 'remove' : 'add']('active');
-		document.querySelector('.form-control').classList[(currStep == 1 || currStep == 8) ? 'remove' : 'add']('active');
+		document.querySelector('.wrapper-inner').classList[(currStep == 1 || currStep == lastStep) ? 'remove' : 'add']('move-step');
+		document.querySelector('.nav').classList[(currStep == 1 || currStep == lastStep) ? 'remove' : 'add']('active');
+		document.querySelector('.form-control').classList[(currStep == 1 || currStep == lastStep) ? 'remove' : 'add']('active');
 		document.querySelectorAll('.nav-item').forEach((el, idx) => {
 			if (idx == currStep - 2) {
 				el.classList.add('active');
@@ -1014,11 +1070,11 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 			}
 		})
 
-		document.querySelector('.form-control-next [data-text-vi]').innerHTML = (currStep < 7) ? 'Tiếp tục' : 'Hoàn thành';
-		document.querySelector('.form-control-next [data-text-en]').innerHTML = (currStep < 7) ? 'Next' : 'Done';
-		document.querySelector('.form-control-next').classList[(currStep < 7) ? 'remove' : 'add']('submit')
+		document.querySelector('.form-control-next [data-text-vi]').innerHTML = (currStep < (lastStep - 1)) ? 'Tiếp tục' : 'Hoàn thành';
+		document.querySelector('.form-control-next [data-text-en]').innerHTML = (currStep < (lastStep - 1)) ? 'Next' : 'Done';
+		document.querySelector('.form-control-next').classList[(currStep < (lastStep - 1)) ? 'remove' : 'add']('submit')
 
-		document.querySelector('.form').classList[(currStep == 1 || currStep == 8) ? 'remove' : 'add']('active')
+		document.querySelector('.form').classList[(currStep == 1 || currStep == lastStep) ? 'remove' : 'add']('active')
 	}
 	updateScreen();
 	document.querySelector('.btn-start').addEventListener('click', function (e) {
@@ -1027,9 +1083,16 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 		currStep++;
 		updateScreen();
 	})
+	document.querySelector('.form-control-prev').addEventListener('click', function(e) {
+		if (currStep <= 1) return;
+
+		e.preventDefault();
+		currStep--;
+		updateScreen();
+	})
 
 	document.querySelector('.form-control-next').addEventListener('click', function(e) {
-		if (currStep >= 8) return;
+		if (currStep >= lastStep - 1) return;
 		e.preventDefault();
 		currStep++;
 		updateScreen();
