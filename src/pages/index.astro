@@ -1020,26 +1020,9 @@ const FermenImg = await getImage({ src: Fermen, format: 'png' });
 </style>
 
 <script is:inline>
-	const DEPLOYMENTURI = 'AKfycbwMMn9IcfgBaOS1NdFFHHqmV7o6w1YsVg8mu3ho5AVxU_EyQjSU5f9O_80YwfW8hSsHsQ';
+	const DEPLOYMENTURI = 'AKfycbzpQ-ZS_gmZry7sL1hHkCDeJ6043kE7lTTI2WAE7MsxSWxxSBMOfLJLHUIS3BIlAAXF8A';
 	const form = document.querySelector("#form");
 	const submitButton = document.querySelector("#submit");
-	// form.addEventListener('submit', e => {
-	// 	submitButton.disabled = true
-
-	// 	let requestBody = new FormData(form)
-
-	// 	e.preventDefault();
-
-	// 	fetch(SHEET_URL, { method: 'POST', body: requestBody })
-	// 	.then(res => {
-	// 		alert('Success!', res);
-	// 		submitButton.disabled = false;
-	// 	})
-	// 	.catch(error => {
-	// 		alert('Error!', error.message);
-	// 		submitButton.disabled = false;
-	// 	})
-	// })
 	let currStep = 1;
 	let lastStep = 10;
 
