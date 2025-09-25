@@ -5,11 +5,12 @@ import Tagline from '~/assets/images/tagline.png';
 import SabecoLogo from '~/assets/images/sabeco.png';
 import Logo150 from '~/assets/images/150logo.png';
 import BG from '~/assets/images/bg.jpg';
+import Disclamer from '~/assets/images/disclamer.png';
 
 const TagLineImg = await getImage({ src: Tagline, format: 'png' })
 const SabecoLogoImg = await getImage({ src: SabecoLogo, format: 'png' });
 const Logo150Img = await getImage({ src: Logo150, format: 'png' });
-
+const DisclamerImg = await getImage({ src: Disclamer, format: 'png' });
 const BgImg = await getImage({ src: BG, format: 'jpg' });
 ---
 <Layout title="Sabeco Hành Trình Di Sản">
@@ -104,7 +105,7 @@ const BgImg = await getImage({ src: BG, format: 'jpg' });
 												</div>
 												<div class="input-field age">
 													<label for='age'>Tuổi</label>
-													<input type='number' name='Tuổi' placeholder="24" autocomplete="off" required/>
+													<input type='number' name='Tuổi' placeholder="18" autocomplete="off" min="18" max="100" required/>
 												</div>
 											</div>
 											<div class="input-field gender">
@@ -165,7 +166,6 @@ const BgImg = await getImage({ src: BG, format: 'jpg' });
 										<li>Công nghệ lên men nhanh</li>
 										<li>Công nghệ lọc lạnh -2°C</li>
 										<li>Công nghệ nấu bia thủ công</li>
-										<li>Công nghệ lọc nóng</li>
 									</ol>
 								</div>
 							</div>
@@ -207,6 +207,15 @@ const BgImg = await getImage({ src: BG, format: 'jpg' });
 								alt=""
 								width={1920}
 								height={1447}
+								class="img"
+							/>
+						</div>
+						<div class="disclamer">
+							<Image
+								src={DisclamerImg.src}
+								alt=""
+								width={2044}
+								height={89}
 								class="img"
 							/>
 						</div>
@@ -282,7 +291,7 @@ const BgImg = await getImage({ src: BG, format: 'jpg' });
 				margin-left: -6rem;
 			}
 			&:last-child {
-				width: 17rem;
+				width: 15rem;
 				margin-left: -4rem;
 			}
 		}
@@ -329,6 +338,16 @@ const BgImg = await getImage({ src: BG, format: 'jpg' });
 		position: relative;
 		z-index: 1;
 		margin-top: -50%;
+		position: relative;
+		display: flex;
+		justify-content: center;
+	}
+	.disclamer {
+		position: absolute;
+		bottom: 1rem;
+		width: 80%;
+		background-color: white;
+		padding: .4rem .6rem;
 	}
 	.second-screen {
 		&-wrap {
@@ -343,11 +362,12 @@ const BgImg = await getImage({ src: BG, format: 'jpg' });
 		}
 		&-img {
 			&:first-child {
-				width: 12rem;
-				margin-left: -2rem;
+				width: 18rem;
+				margin-left: -4rem;
 			}
 			&:last-child {
-				width: 7rem;
+				width: 10rem;
+				margin-left: -2rem;
 			}
 		}
 	}
@@ -690,9 +710,14 @@ const BgImg = await getImage({ src: BG, format: 'jpg' });
 		}
 	}
 	.last-screen {
-		padding-top: 4rem;
 		color: #000;
+		grid-area: 1/1/3/2;
+		.container {
+			height: 100%;
+		}
+
 		&-wrap {
+
 		}
 		&-title {
 			grid-area: 1/1/2/2;
@@ -705,15 +730,17 @@ const BgImg = await getImage({ src: BG, format: 'jpg' });
 			// padding: 4.4rem 5.2rem;
 			text-align: center;
 			transition: opacity .4s ease-in-out;
-			&-txt.italic {
-				font-size: 1.8rem;
-				font-weight: 400;
-			}
+			width: 100%;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
 		}
 		&-head {
 			display: flex;
 			align-items: center;
 			justify-content: center;
+			padding-top: 10vh;
 		}
 		&-img {
 			&:first-child {
@@ -729,82 +756,102 @@ const BgImg = await getImage({ src: BG, format: 'jpg' });
 </style>
 <script is:inline>
 	const data = [
-		{
-			"question": "Năm nào SABECO bắt đầu hành trình của mình, như được hiển thị trên dòng thời gian trên xe?",
-			"options": ["1875", "1900", "1950", "2000"],
-			"answer": "1875"
-		},
-		{
-			"question": "Sản phẩm nào được giới thiệu là 'Hương vị Di sản' trong trải nghiệm?",
-			"options": ["Bia Saigon", "333 Pilsner", "Bia Lạc Việt", "Saigon Gold"],
-			"answer": "333 Pilsner"
-		},
-		{
-			"question": "SABECO đã giành được bao nhiêu giải thưởng quốc tế theo bảng hiển thị trên xe?",
-			"options": ["30", "54", "75", "100"],
-			"answer": "54"
-		},
-		{
-			"question": "Năm nào SABECO mở rộng ra toàn quốc?",
-			"options": ["2000", "2010", "2017", "2020"],
-			"answer": "2017"
-		},
-		{
-			"question": "SABECO có bao nhiêu nhà máy đã đạt được chứng nhận ISO?",
-			"options": ["10", "15", "25", "30"],
-			"answer": "25"
-		},
-		{
-			"question": "Bia nào của SABECO được giới thiệu là biểu tượng của 'Hy vọng vàng'?",
-			"options": ["Bia 333", "Bia Saigon", "Bia Lạc Việt", "Bia Saigon Chill"],
-			"answer": "Bia Lạc Việt"
-		},
-		{
-			"question": "SABECO có bao nhiêu chuyên gia nấu bia?",
-			"options": ["20", "30", "46", "60"],
-			"answer": "46"
-		},
-		{
-			"question": "Năm nào SABECO khánh thành nhà máy mới tại Ninh Bình?",
-			"options": ["2005", "2011", "2015", "2020"],
-			"answer": "2011"
-		},
-		{
-			"question": "SABECO sản xuất bia 333 từ năm nào?",
-			"options": ["1970", "1985", "1995", "2000"],
-			"answer": "1985"
-		},
-		{
-			"question": "Bia 333 có bao nhiêu phiên bản trong danh mục sản phẩm của SABECO?",
-			"options": ["1 phiên bản", "2 phiên bản", "3 phiên bản", "4 phiên bản"],
-			"answer": "2 phiên bản"
-		},
-		{
-			"question": "SABECO sử dụng công nghệ gì trong sản xuất Bia Saigon Chill?",
-			"options": ["Công nghệ lên men nhanh", "Công nghệ lọc lạnh -2°C", "Công nghệ nấu bia thủ công", "Công nghệ lọc nóng"],
-			"answer": "Công nghệ lọc lạnh -2°C"
-		},
-		{
-			"question": "Dòng bia nào của SABECO sử dụng công nghệ 'lên men lạnh kéo dài'?",
-			"options": ["Bia Saigon", "Bia 333 Pilsner", "Bia Lạc Việt", "Saigon Gold"],
-			"answer": "Bia 333 Pilsner"
-		},
-		{
-			"question": "SABECO có bao nhiêu dòng bia trong thương hiệu 'Bia Saigon'?",
-			"options": ["3 dòng", "4 dòng", "5 dòng", "6 dòng"],
-			"answer": "6 dòng"
-		},
-		{
-			"question": "Bia Saigon Gold của SABECO được sản xuất để phục vụ đối tượng khách hàng nào?",
-			"options": ["Khách hàng phổ thông", "Khách hàng trẻ", "Khách hàng cao cấp", "Khách hàng quốc tế"],
-			"answer": "Khách hàng cao cấp"
-		},
-		{
-			"question": "Bia nào được làm từ công nghệ nấu bia thủ công và đã giành được nhiều giải thưởng quốc tế?",
-			"options": ["Bia 333", "Bia Saigon", "Bia Lạc Việt", "Bia Saigon Chill"],
-			"answer": "Bia Saigon"
-		}
-		]
+  {
+    "question": "Hành trình Di sản của SABECO khởi đầu từ năm nào?",
+    "answer": "1875",
+    "options": ["1871", "1875", "1877"]
+  },
+  {
+    "question": "Năm 2020, SABECO chạm mốc bao nhiêu lít bia hàng năm?",
+    "answer": "1 tỷ",
+    "options": ["100 triệu", "1 tỷ", "2 tỷ"]
+  },
+  {
+    "question": "Năm 2025 đánh dấu cột mốc bao nhiêu năm di sản của SABECO?",
+    "answer": "150",
+    "options": ["140", "145", "150"]
+  },
+  {
+    "question": "Chuyến xe Hành Trình Di Sản của SABECO sẽ đi qua bao nhiêu địa điểm?",
+    "answer": "9",
+    "options": ["8", "9", "10"]
+  },
+  {
+    "question": "SABECO hiện có bao nhiêu thợ nấu bia là người Việt Nam?",
+    "answer": "46",
+    "options": ["46", "42", "40"]
+  },
+  {
+    "question": "SABECO đạt bao nhiêu huy chương quốc tế về chất lượng bia từ năm 2018 đến nay?",
+    "answer": "54",
+    "options": ["51", "53", "54"]
+  },
+  {
+    "question": "Đâu là sáng kiến cộng đồng SABECO từng thực hiện trong 3 năm vừa qua?",
+    "answer": "Thắp sáng đường quê",
+    "options": ["Thắp sáng đường quê", "Đem điện lên bản", "Lọc nước miền quê"]
+  },
+  {
+    "question": "Thông điệp được chia sẻ tại khu vực Gìn giữ và Trách nhiệm (ESG) là gì?",
+    "answer": "Cam kết trách nhiệm với cộng đồng, môi trường và tương lai của SABECO",
+    "options": [
+      "Cam kết trách nhiệm với cộng đồng, môi trường và tương lai của SABECO",
+      "Cam kết tiết kiệm điện",
+      "Cam kết đồng hành cùng sự phát triển của Việt Nam"
+    ]
+  },
+  {
+    "question": "Nguyên liệu làm bia bao gồm những gì?",
+    "answer": "Mạch nha, hoa bia, men và nước",
+    "options": [
+      "Mạch nha, hoa bia, men và nước",
+      "Mạch nha, men và nước",
+      "Mạch nha, hương liệu, men và nước"
+    ]
+  },
+  {
+    "question": "Từ năm 2018 đến nay, SABECO sở hữu bao nhiêu thương hiệu bia?",
+    "answer": "3",
+    "options": ["2", "3", "4"]
+  },
+  {
+    "question": "Điểm đến cuối cùng của Hành Trình Di Sản và Đêm Di sản của SABECO là ở đâu?",
+    "answer": "Hà Nội",
+    "options": ["Hà Nội", "Nghệ An", "Bình Định"]
+  },
+  {
+    "question": "SABECO có bao nhiêu nhà máy trên toàn quốc?",
+    "answer": "25",
+    "options": ["24", "25", "26"]
+  },
+  {
+    "question": "Một trong các nguyên tắc thưởng thức có trách nhiệm là gì?",
+    "answer": "Tôn trọng sự lựa chọn của người khác, không ép uống",
+    "options": [
+      "Tôn trọng sự lựa chọn của người khác, không ép uống",
+      "Uống thoải mái, miễn không lái xe sau khi uống bia là được",
+      "Uống để vui vẻ, giải tỏa căng thẳng cho bản thân"
+    ]
+  },
+  {
+    "question": "Uống rượu/bia có thể ảnh hưởng như thế nào đến khả năng lái xe?",
+    "answer": "Ảnh hưởng đến khả năng tập trung, phản xạ và ra quyết định khi tham gia giao thông.",
+    "options": [
+      "Không ảnh hưởng nếu chỉ uống một lượng nhỏ.",
+      "Ảnh hưởng đến khả năng tập trung, phản xạ và ra quyết định khi tham gia giao thông.",
+      "Giúp tăng sự tự tin khi lái xe."
+    ]
+  },
+  {
+    "question": "Sau khi uống bia, lựa chọn nào sau đây là tốt nhất để đảm bảo an toàn khi về nhà?",
+    "answer": "Sử dụng dịch vụ gọi xe hoặc nhờ người không uống rượu/bia lái hộ.",
+    "options": [
+      "Tự lái xe nếu bạn vẫn cảm thấy tỉnh táo.",
+      "Sử dụng dịch vụ gọi xe hoặc nhờ người không uống rượu/bia lái hộ.",
+      "Đi bộ về nhà."
+    ]
+  }
+]
 
 	function shuffleArray(array) {
 		for (let i = array.length - 1; i > 0; i--) {
